@@ -39,3 +39,6 @@ resource "google_container_node_pool" "primary_nodes" {
     }
   }
 }
+
+
+data "google_client_config" "default" {}

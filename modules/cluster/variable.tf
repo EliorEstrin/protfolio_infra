@@ -19,3 +19,4 @@ variable "machine_type" {
   description = "machine type for gke nodes"
   default     = "e2-medium"
 }
+
