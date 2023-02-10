@@ -10,7 +10,7 @@ terraform {
 
 
 provider "google" {
-  project     = "mythic-delight-377411"
-  region      = "us-central1"
+  project = "mythic-delight-377411"
+  region  = "us-central1"
 }
 
