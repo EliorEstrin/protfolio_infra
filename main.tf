@@ -11,12 +11,15 @@ module "cluster" {
 resource "helm_release" "argo" {
   name = "argo"
 
-  repository = "https://argoproj.github.io/argo-helm"
-  chart      = "argo-cd"
-  version    = "5.19.0"
+  repository       = "https://argoproj.github.io/argo-helm"
+  chart            = "argo-cd"
+  version          = "5.19.0"
+  namespace        = "argo"
+  create_namespace = true
 
-  # namespace = "argo"
-  # create_namespace = true
+  depends_on = [
+    module.cluster
+  ]
 
   values = [
     "${file("helm/values.yaml")}"

@@ -31,3 +31,10 @@ provider "helm" {
     cluster_ca_certificate = module.cluster.cluster_ca_certificate
   }
 }
+
+
+provider "kubernetes" {
+  host                   = "https://${module.cluster.kubernetes_cluster_host}"
+  token                  = module.cluster.access_token
+  cluster_ca_certificate = module.cluster.cluster_ca_certificate
+}
