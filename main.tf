@@ -7,7 +7,7 @@ module "cluster" {
   machine_type  = var.machine_type
 }
 
-
+# Setup cluster with argocd
 resource "helm_release" "argo" {
   name = "argo"
 
