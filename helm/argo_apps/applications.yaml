@@ -1,0 +1,31 @@
+applications:
+- name: app-of-apps
+  project: default
+  source:
+    repoURL: 'git@github.com:elior7557/protfolio_gitops.git'
+    path: infra-apps
+    targetRevision: HEAD
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: argo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+- name: app-todo
+  project: default
+  source:
+    repoURL: 'git@github.com:elior7557/protfolio_charts.git'
+    path: todo_chart
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+

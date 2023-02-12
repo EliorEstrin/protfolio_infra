@@ -24,22 +24,6 @@ resource "kubernetes_secret" "sealed-secrets-key" {
   depends_on = [kubernetes_namespace.sealed-secrets-ns]
 }
 
-# Helm chart for sealed secrets
-resource "helm_release" "sealed-secrets" {
-  chart      = "sealed-secrets"
-  name       = "sealed-secrets"
-  repository = "https://bitnami-labs.github.io/sealed-secrets"
-  version    = "2.7.3"
-
-  # namespace = "sealed-secrets"
-
-  depends_on = [
-    module.cluster,
-    kubernetes_namespace.sealed-secrets-ns,
-    kubernetes_secret.sealed-secrets-key
-  ]
-}
-
 
 # secrets for sealed secret
 data "google_secret_manager_secret_version" "tls-crt" {
@@ -55,6 +39,10 @@ data "google_secret_manager_secret_version" "proftolio-private-key" {
   secret = "protolio-ssh-private-key"
 }
 
+# for gitops repo
+data "google_secret_manager_secret_version" "proftolio-private-key-gitops" {
+  secret = "protolio-ssh-private-key-gitops"
+}
 
 
 ## Repositore configuration for argo
@@ -80,5 +68,48 @@ resource "kubernetes_secret" "chart_repo" {
   depends_on = [
     module.cluster,
     helm_release.argo
+  ]
+}
+
+
+resource "kubernetes_secret" "gitops_repo" {
+  metadata {
+    name      = "gitops-repo"
+    namespace = "argo"
+
+    labels = {
+      "argocd.argoproj.io/secret-type" = "repository"
+    }
+  }
+
+  data = {
+    "type"          = "git"
+    "url"           = "git@github.com:elior7557/protfolio_gitops.git"
+    "sshPrivateKey" = data.google_secret_manager_secret_version.proftolio-private-key-gitops.secret_data
+  }
+  type = "Opaque"
+
+  depends_on = [
+    module.cluster,
+    helm_release.argo
+  ]
+}
+
+
+
+
+
+
+# argo cd apps
+resource "helm_release" "argocd-apps" {
+  depends_on = [helm_release.argo]
+  chart      = "argocd-apps"
+  name       = "argocd-apps"
+  namespace  = "argo"
+  version = "0.0.8"
+  repository = "https://argoproj.github.io/argo-helm"
+
+  values = [
+    file("helm/argo_apps/applications.yaml")
   ]
 }
