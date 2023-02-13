@@ -1,39 +1,10 @@
-# key for argo to the application chart repository
-data "google_secret_manager_secret_version" "proftolio-private-key" {
-  secret = "protolio-ssh-private-key"
-}
-
 # key for argo gitops repository which includes application files and some charts
 data "google_secret_manager_secret_version" "proftolio-private-key-gitops" {
   secret = "protolio-ssh-private-key-gitops"
 }
 
+
 ### Repositories configuration for argo ###
-
-// Private repository credentials
-resource "kubernetes_secret" "chart_repo" {
-  metadata {
-    name      = "chart-repo"
-    namespace = "argo"
-
-    labels = {
-      "argocd.argoproj.io/secret-type" = "repository"
-    }
-  }
-
-  data = {
-    "type"          = "git"
-    "url"           = "git@github.com:elior7557/protfolio_charts.git"
-    "sshPrivateKey" = data.google_secret_manager_secret_version.proftolio-private-key.secret_data
-  }
-  type = "Opaque"
-
-  depends_on = [
-    module.cluster,
-    helm_release.argo
-  ]
-}
-
 resource "kubernetes_secret" "gitops_repo" {
   metadata {
     name      = "gitops-repo"

@@ -15,8 +15,8 @@ applications:
 - name: app-todo
   project: default
   source:
-    repoURL: 'git@github.com:elior7557/protfolio_charts.git'
-    path: todo_chart
+    repoURL: 'git@github.com:elior7557/protfolio_gitops.git'
+    path: application_chart
     targetRevision: HEAD
     helm:
       valueFiles:
@@ -28,4 +28,5 @@ applications:
     automated:
       prune: true
       selfHeal: true
+
 
