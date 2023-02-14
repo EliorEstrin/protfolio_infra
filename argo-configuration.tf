@@ -30,12 +30,16 @@ resource "kubernetes_secret" "gitops_repo" {
 
 # argocd application to start with cluster setup
 resource "helm_release" "argocd-apps" {
-  depends_on = [helm_release.argo]
   chart      = "argocd-apps"
   name       = "argocd-apps"
   namespace  = "argo"
   version = "0.0.8"
   repository = "https://argoproj.github.io/argo-helm"
+
+  depends_on = [
+    module.cluster,
+    helm_release.argo
+  ]
 
   values = [
     file("helm/argo_apps/applications.yaml")
