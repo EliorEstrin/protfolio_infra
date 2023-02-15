@@ -21,7 +21,7 @@ resource "google_container_node_pool" "primary_nodes" {
   node_count = var.gke_num_nodes
 
   node_config {
-    disk_size_gb = 100
+    disk_size_gb = var.cluster_disk_size_gb
     # oauth_scopes = [
     #   "https://www.googleapis.com/auth/logging.write",
     #   "https://www.googleapis.com/auth/monitoring",

@@ -1,7 +1,7 @@
 variable "project_id" {
   description = "project id"
 }
-
+############## Cluster variables ###############
 variable "region" {
   description = "region"
   default     = "us-central1"
@@ -22,7 +22,16 @@ variable "machine_type" {
   default     = "e2-medium"
 }
 
-// argo relate variable
+variable "cluster_disk_size_gb" {
+  description = "cluster disk size"
+}
+
+variable "cluster_subnet" {
+  description = "google_compute_subnetwork"
+}
+
+
+############## argo variables ###############
 variable "argo_logical_chart_name" {
   description = "the name of the chart"
 }
@@ -47,8 +56,8 @@ variable "argo_values_file_path" {
   description = "File path for the values.yaml file"
 }
 
-//argo configuration
 
+############## argo config variables ###############
 variable "gitops_repository_name" {
   description = "the name for the repository as will be seen in the argo UI"
 }
@@ -62,8 +71,7 @@ variable "gitops_ssh_private_key_secret_name" {
   description = "The name of the Google Secret Manager secret that contains the SSH private key for accessing the GitOps repository."
 }
 
-// argocd apps
-
+############## argo config variables ###############
 variable "argocd_apps_repository" {
   description = "the repository for the helm chart of argocd "
 }
@@ -77,8 +85,7 @@ variable "argocd_apps_values_file_path" {
 }
 
 
-# selaed secrets 
-
+############## selaed secrets  variables ###############
 variable "sealed_secret_namespace_name" {
   type        = string
   description = "The name of the Kubernetes namespace where the Sealed Secrets key secret should be created."
@@ -98,3 +105,4 @@ variable "sealed_secret_tls_key_secret" {
   type        = string
   description = "The name of the Google Secret Manager secret that contains the TLS private key data."
 }
+
