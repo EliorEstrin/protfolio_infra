@@ -29,3 +29,16 @@ module "argocd" {
     module.cluster
   ]
 }
+
+
+module "sealed-secrets" {
+  source         = "./modules/sealed_secrets"
+  namespace_name = var.sealed_secret_namespace_name
+  secret_name    = var.sealed_secret_key_secret_name
+  tls_crt_secret = var.sealed_secret_tls_crt_secret
+  tls_key_secret = var.sealed_secret_tls_key_secret
+
+  depends_on = [
+    module.cluster
+  ]
+}

@@ -1,18 +1,15 @@
 # Namespace for sealed-secrets
 resource "kubernetes_namespace" "sealed-secrets-ns" {
   metadata {
-    name = "sealed-secrets"
+    name = var.namespace_name
   }
-  depends_on = [
-    module.cluster
-  ]
 }
 
 # Sealed secrets keys
 resource "kubernetes_secret" "sealed-secrets-key" {
   metadata {
-    name      = "sealed-secrets-key"
-    namespace = "sealed-secrets"
+    name      = var.secret_name
+    namespace = var.namespace_name
   }
   data = {
     "tls.crt" = data.google_secret_manager_secret_version.tls-crt.secret_data
@@ -24,9 +21,10 @@ resource "kubernetes_secret" "sealed-secrets-key" {
 
 # secrets for sealed secret
 data "google_secret_manager_secret_version" "tls-crt" {
-  secret = "bitnami-tls-crt"
+  secret = var.tls_crt_secret
 }
 
 data "google_secret_manager_secret_version" "tls-key" {
-  secret = "bitnami-tls-key"
+  secret = var.tls_key_secret
 }
+

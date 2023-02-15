@@ -17,3 +17,9 @@ gitops_ssh_private_key_secret_name = "protolio-ssh-private-key-gitops"
 argocd_apps_repository             = "https://argoproj.github.io/argo-helm"
 argocd_apps_chart_version          = "0.0.8"
 argocd_apps_values_file_path       = "helm/argo_apps/applications.yaml"
+
+//sealed secret
+sealed_secret_namespace_name  = "sealed-secrets"
+sealed_secret_key_secret_name = "sealed-secrets-key"
+sealed_secret_tls_crt_secret  = "bitnami-tls-crt"
+sealed_secret_tls_key_secret  = "bitnami-tls-key"
