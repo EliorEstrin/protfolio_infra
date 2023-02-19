@@ -4,6 +4,7 @@ region               = "us-central1"
 cluster_az           = "us-central1-c"
 gke_num_nodes        = 3
 machine_type         = "e2-highcpu-8"
+# machine_type = "e2-custom-12-6144"
 cluster_disk_size_gb = 100
 cluster_subnet       = "10.10.0.0/24"
 
