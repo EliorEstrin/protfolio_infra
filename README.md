@@ -11,3 +11,6 @@ This repository contains the necessary Terraform files to deploy the infrastruct
  * **kubernetes**: This provider is used to interact with Kubernetes clusters.
  * **google**: This provider is used to interact with Google Cloud.
 
+# The Result after Terrarom Apply
+
+![argocd](./tf-apply.png)
