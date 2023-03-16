@@ -19,12 +19,18 @@ module "argocd" {
   values_file_path   = var.argo_values_file_path
 
   // Argo configuration
+  
+  // Repo name in argo UI
   repository_name             = var.gitops_repository_name
+  // Repository url using ssh
   repo_url                    = var.gitops_repo_url
+  // name of secret from google cloud secret manager
   ssh_private_key_secret_name = var.gitops_ssh_private_key_secret_name
 
+  // Helm chart of Argocd Apps of apps
   argocd_apps_repository       = var.argocd_apps_repository
   argocd_apps_chart_version    = var.argocd_apps_chart_version
+  // Aplication file which starts argo application - infra apps and todo app
   argocd_apps_values_file_path = var.argocd_apps_values_file_path
 
   depends_on = [
