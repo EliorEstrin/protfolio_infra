@@ -6,16 +6,18 @@ This repository contains the necessary Terraform files to deploy the infrastruct
  * **module "argocd"**: This module deploys Argo CD with two YAML files, apps-of-apps.yaml which deploys the necessary infrastructure apps, and application.yaml which deploys the application chart.
  * **module "sealed-secret"**: This module deploys the key into the cluster, and the keys origin is in GCP (Google Cloud Platform) Secret Manager.
 
-# providers
+# Providers
  * **helm**: This provider is used to manage Kubernetes applications.
  * **kubernetes**: This provider is used to interact with Kubernetes clusters.
  * **google**: This provider is used to interact with Google Cloud.
 
-## configuration needed
-- default configuration in terrafrom.tfvars.
+## Recomanded Configuration
+- see `terrafrom.tfvars`
 - configure a project in gcp with k8s api enabled
 - [gitops repositroy](https://github.com/elior7557/protfolio_gitops.git) in order to deploy application charts.
-### note
+- In the gitops repository make sure that there is an ingress controller and preferably static ip for the ingress.
+  
+### Note
 sealed secrets are used as a dependency for this application to work.
 
 
